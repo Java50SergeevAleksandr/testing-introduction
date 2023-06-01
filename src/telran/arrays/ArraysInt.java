@@ -25,11 +25,7 @@ public class ArraysInt {
 	}
 
 	public static int[] insertNumberSorted(int[] arraySorted, int number) {
-		// TODO takes sorted array and number to insert
-		// returns sorted array with the given number at a proper position
-		// apply the standard method of the class Arrays int binarySearch(int[]
-		// arraySorted, int key)
-
+		
 		int[] res = new int[arraySorted.length + 1];
 		int index = Arrays.binarySearch(arraySorted, number);
 		if (index >= 0) {
