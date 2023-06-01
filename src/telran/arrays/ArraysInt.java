@@ -25,16 +25,19 @@ public class ArraysInt {
 	}
 
 	public static int[] insertNumberSorted(int[] arraySorted, int number) {
-		
+
 		int[] res = new int[arraySorted.length + 1];
 		int index = Arrays.binarySearch(arraySorted, number);
-		if (index >= 0) {
-			res = insertNumber(arraySorted, index, number);
-		} else if (index < -arraySorted.length) {
-			res = insertNumber(arraySorted, arraySorted.length, number);
-		} else {
-			res = insertNumber(arraySorted, -(index + 1), number);
+		
+		if (index < 0) {
+			if (index < -arraySorted.length) {
+				index = arraySorted.length;
+			} else {
+				index = -(index + 1);
+			}
 		}
+
+		res = insertNumber(arraySorted, index, number);
 		return res;
 	}
 }
