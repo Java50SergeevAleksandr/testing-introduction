@@ -1,14 +1,19 @@
 package telran.arrays.test;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import telran.arrays.ArraysInt;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class ArraysTests {
+
+	private static int N_ELEMENTS = 1000000;
+	private static int N_RUNS = 1000000;
 
 	@Test
 	void initialTest() {
@@ -109,11 +114,16 @@ public class ArraysTests {
 		key = 0;
 		int expected4 = -1;
 		assertEquals(expected4, Arrays.binarySearch(src, key));
+
+		int[] src2 = { 1, 2, 4, 5 };
+		key = 3;
+		int expected5 = -3;
+		assertEquals(expected5, Arrays.binarySearch(src2, key));
 	}
 
 	@Test
 	void insertSortedTest() {
-		
+
 		int[] src = { 1, 2, 3, 4, 5 };
 		int number = 10;
 		int[] expected1 = { 1, 2, 3, 4, 5, 10 };
@@ -133,4 +143,111 @@ public class ArraysTests {
 		assertArrayEquals(expected4, ArraysInt.insertNumberSorted(src2, number));
 
 	}
+
+	@Test
+	void maxIntTest() {
+		assertEquals(Integer.MAX_VALUE, getIntMax());
+	}
+
+	private int getIntMax() {
+		int res = 1;
+		while (res > 0) {
+			res++;
+		}
+
+		return res - 1;
+	}
+
+	@Test
+	@Timeout(3)
+	void maxLongTest() {
+		assertEquals(Long.MAX_VALUE, getLongMax());
+	}
+
+	private long getLongMax() {
+		long res = 1;
+		while (res > 0) {
+			res *= 2;
+		}
+
+		return res - 1;
+	}
+
+	@Test
+	void myBinarySearchTest() {
+
+		int[] src = { 1, 2, 3, 4, 5 };
+		int key = 1;
+		int expected1 = 0;
+		assertEquals(expected1, ArraysInt.binarySearch(src, key));
+
+		key = 5;
+		int expected2 = 4;
+		assertEquals(expected2, ArraysInt.binarySearch(src, key));
+
+		key = 10;
+		int expected3 = -src.length - 1;
+		assertEquals(expected3, ArraysInt.binarySearch(src, key));
+
+		key = 0;
+		int expected4 = -1;
+		assertEquals(expected4, ArraysInt.binarySearch(src, key));
+
+		int[] src2 = { 1, 2, 4, 5 };
+		key = 3;
+		int expected5 = -3;
+		assertEquals(expected5, ArraysInt.binarySearch(src2, key));
+	}
+
+	@Test
+	void binarySearchRepeatedNumbersTest() {
+
+		int[] src = { 1, 2, 3, 4, 4, 4, 4, 5, 6 };
+		int key = 4;
+		int expected1 = 3;
+		assertEquals(expected1, ArraysInt.binarySearch(src, key));
+
+	}
+
+	@Test
+	void muchRepeatedTest() {
+		int[] array = new int[N_ELEMENTS];
+		for (int i = 0; i < N_RUNS; i++) {
+			assertEquals(0, ArraysInt.binarySearch(array, 0));
+		}
+	}
+
+	@Test
+	void sortingSpeedBubbleSortTest() {
+		int[] array = new int[100000];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = ArraysInt.getRandomInt();
+		}
+
+		int[] res = Arrays.copyOf(array, array.length);
+
+		ArraysInt.bubbleSort(array);
+		Arrays.sort(res);
+
+		assertArrayEquals(res, array);
+
+	}
+
+	@Test
+	void sortingSpeedQuickSortTest() {
+		int[] array = new int[100000];
+
+		for (int i = 0; i < array.length; i++) {
+			array[i] = ArraysInt.getRandomInt();
+		}
+
+		int[] res = Arrays.copyOf(array, array.length);
+
+		ArraysInt.quickSort(array);
+		Arrays.sort(res);
+
+		assertArrayEquals(res, array);
+
+	}
+
 }
